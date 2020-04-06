@@ -1,74 +1,39 @@
-
 <p align="center">
-  <a href="https://github.com/actions/javascript-action/actions"><img alt="javscript-action status" src="https://github.com/actions/javascript-action/workflows/units-test/badge.svg"></a>
+  <a href="https://github.com/aibexhq/slack-notify"><img alt="aibexhq/slack-notify status" src="https://github.com/aibexhq/slack-notify/workflows/units-test/badge.svg"></a>
 </p>
 
-# Create a JavaScript Action
+# aibexhq/slack-notify
 
-Use this template to bootstrap the creation of a JavaScript action.:rocket:
+Because sometimes, you just want a mutliline markdown friendly message sent to slack. With variables.
 
-This template includes tests, linting, a validation workflow, publishing, and versioning guidance.  
+# Usage
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
-
-## Create an action from this template
-
-Click the `Use this Template` and provide the new repo details for your action
-
-## Code in Master
-
-Install the dependencies  
-```bash
-$ npm install
+```yaml
+steps:
+  - name: Checkout
+    uses: actions/checkout@v2
+  - name: Notifying via Slack
+    uses: aibexhq/slack-notify@master
+    with:
+      token: ${{secrets.SLACK_BOT_KEY}} # slack bot key
+      channel: ${{secrets.SLACK_CHANNEL}} # your channel
+      eval:
+        changelog: git log --reverse --color=never --pretty='format:* %h %s (%ae)' {{github.event.push.before}}...{{github.event.push.head}}
+      message: |
+        *Something Happened!*
+        `{{github.event.push.before}}...{{github.event.push.head}}`
+        {{eval.changelog}}
 ```
 
-Run the tests :heavy_check_mark:  
-```bash
-$ npm test
+# Developing (from original readme)
 
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-
-...
-```
-
-## Change action.yml
-
-The action.yml contains defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-const core = require('@actions/core');
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
+This is based on the javascript-action template.
 
 ## Package for distribution
 
 GitHub Actions will run the entry point from the action.yml. Packaging assembles the code into one file that can be checked in to Git, enabling fast and reliable execution and preventing the need to check in node_modules.
 
-Actions are run from GitHub repos.  Packaging the action will create a packaged action in the dist folder.
+Actions are run from GitHub repos. Packaging the action will create a packaged action in the dist folder.
 
 Run package
 
@@ -97,18 +62,6 @@ $ git commit -a -m "v1 release"
 $ git push origin v1
 ```
 
-Your action is now published! :rocket: 
+Your action is now published! :rocket:
 
 See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Usage
-
-You can now consume the action by referencing the v1 branch
-
-```yaml
-uses: actions/javascript-action@v1
-with:
-  milliseconds: 1000
-```
-
-See the [actions tab](https://github.com/actions/javascript-action/actions) for runs of this action! :rocket:

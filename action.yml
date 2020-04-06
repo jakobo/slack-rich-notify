@@ -1,13 +1,24 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: "Slack Notification"
+description: "Send a slack message, supporting Markdown and Multiline text"
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  token:
+    description: Your Slack bot token
     required: true
-    default: '1000'
+  channel:
+    description: Channel to send your message to
+    required: true
+  raw:
+    description: Do not process the message using Handlebars
+    default: false
+  message:
+    description: The message to send. Use a pipe (|) in YAML for multiline strings
+    required: true
+  evals:
+    description: A collection of scripts/commands to run before populating the message. Each key will be mapped to evals.<key> in the Handlebars render
+    required: false
 outputs:
-  time: # output will be available to future steps 
-    description: 'The message to output'
+  message: # output will be available to future steps
+    description: The final Slack mesage that was generated
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node12"
+  main: "dist/index.js"

@@ -1,16 +1,16 @@
 {
-  "name": "javascript-action",
+  "name": "slack-notify",
   "version": "1.0.0",
-  "description": "JavaScript Action Template",
+  "description": "A Markdown and Multiline Friendly Slack Notifier",
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js",
     "package": "ncc build index.js -o dist",
-    "test": "eslint index.js && jest"
+    "test": "eslint index.js && echo \"yolo\" && exit 0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/javascript-action.git"
+    "url": "git+https://github.com/aibexhq/slack-notify.git"
   },
   "keywords": [
     "GitHub",
@@ -20,11 +20,15 @@
   "author": "GitHub",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/actions/javascript-action/issues"
+    "url": "https://github.com/aibexhq/slack-notify/issues"
   },
-  "homepage": "https://github.com/actions/javascript-action#readme",
+  "homepage": "https://github.com/aibexhq/slack-notify#readme",
   "dependencies": {
-    "@actions/core": "^1.1.1"
+    "@actions/core": "^1.1.1",
+    "@actions/exec": "^1.0.3",
+    "@actions/github": "^2.1.1",
+    "@slack/bolt": "^2.0.0",
+    "handlebars": "^4.7.6"
   },
   "devDependencies": {
     "@zeit/ncc": "^0.20.5",

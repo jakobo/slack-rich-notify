@@ -17,8 +17,8 @@ steps:
     with:
       token: ${{secrets.SLACK_BOT_KEY}} # slack bot key
       channel: ${{secrets.SLACK_CHANNEL}} # your channel
-      eval:
-        changelog: git log --reverse --color=never --pretty='format:* %h %s (%ae)' {{github.event.push.before}}...{{github.event.push.head}}
+      eval: |
+        changelog = git log --reverse --color=never --pretty='format:* %h %s (%ae)' {{github.event.push.before}}...{{github.event.push.head}}
       message: |
         *Something Happened!*
         `{{github.event.push.before}}...{{github.event.push.head}}`

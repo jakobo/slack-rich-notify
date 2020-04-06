@@ -8,6 +8,7 @@ const { App } = require("@slack/bolt");
 async function run() {
   try {
     const token = core.getInput("token");
+    const signingSecret = core.getInput("secret");
     const channel = core.getInput("channel");
     const raw = core.getInput("raw") || false;
     const message = core.getInput("message");
@@ -25,6 +26,7 @@ async function run() {
 
     const app = new App({
       token,
+      signingSecret,
     });
 
     const payload = {

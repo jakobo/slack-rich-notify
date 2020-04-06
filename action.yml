@@ -2,7 +2,10 @@ name: "Slack Notification"
 description: "Send a slack message, supporting Markdown and Multiline text"
 inputs:
   token:
-    description: Your Slack bot token
+    description: Your Slack bot token (from your App's "OAuth & Permissions" page)
+    required: true
+  secret:
+    description: Your Slack bot's Signing Secret (from your App's "Basic Information" page)
     required: true
   channel:
     description: Channel to send your message to

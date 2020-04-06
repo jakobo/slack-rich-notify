@@ -6025,8 +6025,17 @@ async function run() {
     const channel = core.getInput("channel");
     const raw = core.getInput("raw") || false;
     const message = core.getInput("message");
-    const evals = core.getInput("eval") || {};
+    const evalStrings = core.getInput("eval") || "";
     const context = github.context;
+
+    // turn our eval strings into actionable commands
+    const evals = evalStrings.split(/\n+/g).reduce((a, e) => {
+      const [saveAs, cmd] = e.split(/\s*=\s*/).map((p) => p.trim());
+      return {
+        ...a,
+        [saveAs]: cmd,
+      };
+    }, {});
 
     const app = new App({
       token,

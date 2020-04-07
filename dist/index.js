@@ -5827,7 +5827,7 @@ async function run() {
         }, {})
       : {};
 
-    const payload = {
+    const data = {
       inputs: {
         channel,
         raw,
@@ -5840,7 +5840,7 @@ async function run() {
 
     for (const e of Object.keys(evals)) {
       // from https://github.com/actions/toolkit/tree/master/packages/exec
-      const command = Handlebars.compile(evals[e], hbOptions)(payload);
+      const command = Handlebars.compile(evals[e], hbOptions)(data);
       const results = { out: "", err: "" };
       core.debug("Evaluating " + command);
       await exec.exec(command, [], {
@@ -5860,18 +5860,18 @@ async function run() {
       if (results.err) {
         throw new Error(results.err);
       } else {
-        payload.evals[e] = results.out;
+        data.evals[e] = results.out;
       }
     }
 
-    core.debug("Final message payload");
-    core.debug(JSON.stringify(payload));
+    core.debug("Final message data");
+    core.debug(JSON.stringify(data));
 
     let formattedMessage = message;
     if (!raw) {
       core.debug("formatting message:");
       core.debug(message);
-      formattedMessage = Handlebars.compile(message, hbOptions)(payload);
+      formattedMessage = Handlebars.compile(message, hbOptions)(data);
     } else {
       core.debug("Raw enabled, skipping message formatting");
       formattedMessage = raw;
@@ -28267,7 +28267,7 @@ module.exports = factory();
 
 const cut = (H) =>
   H.registerHelper("cut", (s, len) => {
-    return H.SafeString(`${s}`.substring(0, len));
+    return new H.SafeString(`${s}`.substring(0, len));
   });
 
 module.exports = (H) => {

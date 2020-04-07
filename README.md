@@ -13,7 +13,7 @@ steps:
   - name: Checkout
     uses: actions/checkout@v2
   - name: Notifying via Slack
-    uses: aibexhq/slack-notify@master
+    uses: aibexhq/slack-notify@v1.0.1
     with:
       token: ${{secrets.SLACK_BOT_KEY}} # your slack bot key
       secret: ${{secrets.SLACK_SIGNING_SECRET}} # your slack signing secret

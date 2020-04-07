@@ -2,7 +2,6 @@ const core = require("@actions/core");
 const exec = require("@actions/exec");
 const github = require("@actions/github");
 const Handlebars = require("handlebars");
-const querystring = require("querystring");
 const { App } = require("@slack/bolt");
 
 const hbOptions = {
@@ -18,7 +17,7 @@ async function run() {
     const channel = core.getInput("channel");
     const raw = core.getInput("raw") || false;
     const message = core.getInput("message");
-    const evalStrings = querystring.unescape(core.getInput("eval") || "");
+    const evalStrings = core.getInput("eval") || "";
     const context = github.context;
 
     core.setSecret(token);
@@ -37,6 +36,9 @@ async function run() {
       token,
       signingSecret,
     });
+
+    core.debug("Eval Statements:");
+    core.debug(JSON.stringify(evals));
 
     const payload = {
       vars: {
@@ -72,6 +74,8 @@ async function run() {
       }
       payload.eval[e] = output;
     }
+
+    core.debug("Formatting with payload: " + JSON.stringify(payload));
 
     let formattedMessage = message;
     if (!raw) {

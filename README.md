@@ -26,6 +26,26 @@ steps:
         {{eval.changelog}}
 ```
 
+## What's in `context`?
+
+The `context` object available to your handlebars template is the same context object used by [Octokit](https://github.com/actions/toolkit/tree/master/packages/github). It contains a `payload` object which is your webhook payload, along with a variety of other items including `sha`, `ref`, `workflow` and more.
+
+```json
+"context": {
+  "payload": {
+    "pull_request": {
+      /* Specific based on type of event */
+    }
+  },
+  "eventName": "pull_request",
+  "sha": "94933e1fe203d34a3ed73033c6fb04eb07715de4",
+  "ref": "refs/heads/jakobo/docker_smash_2",
+  "workflow": "Pilot",
+  "action": "1",
+  "actor": "nektos/act"
+},
+```
+
 # Developing (from original readme)
 
 This is based on the javascript-action template.

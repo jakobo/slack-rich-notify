@@ -2,7 +2,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const Handlebars = require("handlebars");
 const { App } = require("@slack/bolt");
-const execa = require("execa");
+const exec = require("exec");
 
 const hbOptions = {
   data: false,
@@ -56,16 +56,28 @@ async function run() {
 
     for (const e of Object.keys(evals)) {
       // from https://github.com/actions/toolkit/tree/master/packages/exec
-      // or execa...
+      let myOutput = "";
+      let myError = "";
+
+      const options = {};
+      options.listeners = {
+        stdout: (data) => {
+          myOutput += data.toString();
+        },
+        stderr: (data) => {
+          myError += data.toString();
+        },
+      };
+
       const command = Handlebars.compile(evals[e], hbOptions)(payload);
       core.debug("Evaluating " + command);
-      const result = await execa(command);
+      await exec.exec(command);
 
-      if (result.exitCode !== 0) {
-        throw new Error(result.stderr.toString());
+      if (myError) {
+        throw new Error(myError);
+      } else {
+        payload.eval[e] = myOutput;
       }
-
-      payload.eval[e] = result.stdout.toString();
     }
 
     core.debug("Formatting with payload: " + JSON.stringify(payload));
@@ -79,11 +91,11 @@ async function run() {
       formattedMessage = raw;
     }
 
-    const result = await app.client.chat.postMessage({
-      token,
-      channel,
-      text: formattedMessage,
-    });
+    // const result = await app.client.chat.postMessage({
+    //   token,
+    //   channel,
+    //   text: formattedMessage,
+    // });
 
     core.setOutput("message", formattedMessage);
     core.debug("Slack result", result);

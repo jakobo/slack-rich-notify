@@ -4,6 +4,11 @@ const github = require("@actions/github");
 const Handlebars = require("handlebars");
 const { App } = require("@slack/bolt");
 
+const hbOptions = {
+  data: false,
+  noEscape: true,
+};
+
 // most @actions toolkit packages have async methods
 async function run() {
   try {
@@ -14,6 +19,9 @@ async function run() {
     const message = core.getInput("message");
     const evalStrings = core.getInput("eval") || "";
     const context = github.context;
+
+    core.setSecret(token);
+    core.setSecret(signingSecret);
 
     // turn our eval strings into actionable commands
     const evals = evalStrings.split(/\n+/g).reduce((a, e) => {
@@ -54,7 +62,7 @@ async function run() {
         },
       };
 
-      const command = Handlebars.compile(evals[e])(payload);
+      const command = Handlebars.compile(evals[e], hbOptions)(payload);
 
       core.debug("Evaluating " + command);
       await exec.exec(command, options);
@@ -66,7 +74,9 @@ async function run() {
 
     let formattedMessage = message;
     if (!raw) {
-      formattedMessage = Handlebars.compile(message)(payload);
+      console.log("formatting message:", message);
+      formattedMessage = Handlebars.compile(message, hbOptions)(payload);
+      console.log("result:", formattedMessage);
     } else {
       formattedMessage = raw;
     }

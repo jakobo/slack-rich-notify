@@ -6071,7 +6071,7 @@ async function run() {
       const command = Handlebars.compile(evals[e])(payload);
 
       core.debug("Evaluating " + command);
-      await exec(command, options);
+      await exec.exec(command, options);
       if (errors.length) {
         throw new Error(errors);
       }

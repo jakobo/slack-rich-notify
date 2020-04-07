@@ -1260,20 +1260,22 @@ async function run() {
     const channel = core.getInput("channel");
     const raw = core.getInput("raw") || false;
     const message = core.getInput("message");
-    const evalStrings = core.getInput("eval") || "";
+    const evalStrings = core.getInput("evals") || "";
     const context = github.context;
 
     core.setSecret(token);
     core.setSecret(signingSecret);
 
     // turn our eval strings into actionable commands
-    const evals = evalStrings.split(/\n+/g).reduce((a, e) => {
-      const [saveAs, ...cmd] = e.split(/=/g);
-      return {
-        ...a,
-        [saveAs.trim()]: cmd.join("=").trim(),
-      };
-    }, {});
+    const evals = evalStrings
+      ? evalStrings.split(/\n+/g).reduce((a, e) => {
+          const [saveAs, ...cmd] = e.split(/=/g);
+          return {
+            ...a,
+            [saveAs.trim()]: cmd.join("=").trim(),
+          };
+        }, {})
+      : {};
 
     // const app = new App({
     //   token,

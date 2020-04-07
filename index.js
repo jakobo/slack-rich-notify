@@ -80,12 +80,15 @@ async function run() {
 
     let formattedMessage = message;
     if (!raw) {
-      console.log("formatting message:", message);
+      core.debug("formatting message:");
+      core.debug(message);
       formattedMessage = Handlebars.compile(message, hbOptions)(payload);
-      console.log("result:", formattedMessage);
     } else {
       formattedMessage = raw;
     }
+
+    core.debug("Message to send:");
+    core.debug(formattedMessage);
 
     // const result = await app.client.chat.postMessage({
     //   token,

@@ -2,7 +2,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const Handlebars = require("handlebars");
 const { App } = require("@slack/bolt");
-const exec = require("exec");
+const exec = require("@actions/exec");
 
 const hbOptions = {
   data: false,

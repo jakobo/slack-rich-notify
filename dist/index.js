@@ -6027,6 +6027,9 @@ async function run() {
       eval: {},
     };
 
+    core.debug("Handlebars payload");
+    core.debug(JSON.stringify(payload));
+
     for (const e of Object.keys(evals)) {
       // from https://github.com/actions/toolkit/tree/master/packages/exec
       // or execa...

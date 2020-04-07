@@ -15,15 +15,23 @@ steps:
   - name: Notifying via Slack
     uses: aibexhq/slack-notify@master
     with:
-      token: ${{secrets.SLACK_BOT_KEY}} # slack bot key
-      secret: ${{secrets.SLACK_SIGNING_SECRET}} # slack signing secret
-      channel: ${{secrets.SLACK_CHANNEL}} # your channel
-      eval: |
-        changelog = git log --reverse --color=never --pretty='format:* %h %s (%ae)' {{github.event.push.before}}...{{github.event.push.head}}
+      token: ${{secrets.SLACK_BOT_KEY}} # your slack bot key
+      secret: ${{secrets.SLACK_SIGNING_SECRET}} # your slack signing secret
+      channel: ${{secrets.SLACK_CHANNEL}} # your slack channel
+      # evals - a string of statements (1 per line), assigning the results of a
+      # shell command to the left-hand side of the equal (=). In this example,
+      # we are running a `git log` command with specific formatting, and then
+      # saving the result to a variable called "changelog"
+      #
+      # Supports Handlebars templating
+      evals: |
+        changelog = git --no-pager log --reverse --color=never --pretty='format:* %h %s (%ae)' {{context.payload.push.before}}...{{context.payload.push.head}}
+      # message - a string to send to Slack
+      # Supports Markdown and Handlebars
       message: |
-        *Something Happened!*
-        `{{context.payload.before}}...{{context.payload.head}}`
-        {{eval.changelog}}
+        *Something Got Pushed!*
+        `{{context.payload.push.before}}...{{context.payload.push.head}}`
+        {{evals.changelog}}
 ```
 
 ## What's in `context`?

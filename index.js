@@ -69,6 +69,12 @@ async function run() {
       core.debug("Evaluating " + command);
       await exec.exec(command, options);
 
+      core.debug("Errors");
+      core.debug(myError);
+
+      core.debug("Result");
+      core.debug(myOutput);
+
       if (myError) {
         throw new Error(myError);
       } else {

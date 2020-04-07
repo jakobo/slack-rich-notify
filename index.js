@@ -52,33 +52,27 @@ async function run() {
 
     for (const e of Object.keys(evals)) {
       // from https://github.com/actions/toolkit/tree/master/packages/exec
-      let myOutput = "";
-      let myError = "";
-
-      const options = {};
-      options.listeners = {
-        stdout: (data) => {
-          myOutput += data.toString();
-        },
-        stderr: (data) => {
-          myError += data.toString();
-        },
-      };
-
       const command = Handlebars.compile(evals[e], hbOptions)(payload);
+      const results = { out: "", err: "" };
       core.debug("Evaluating " + command);
-      await exec.exec(command, options);
+      await exec.exec(command, {
+        listeners: {
+          stdout: (data) => {
+            results.out += data.toString();
+          },
+          stderr: (data) => {
+            results.err += data.toString();
+          },
+        },
+      });
 
-      core.debug("Errors");
-      core.debug(myError);
+      core.debug("result");
+      core.debug(JSON.stringify(results));
 
-      core.debug("Result");
-      core.debug(myOutput);
-
-      if (myError) {
-        throw new Error(myError);
+      if (results.err) {
+        throw new Error(results.err);
       } else {
-        payload.evals[e] = myOutput;
+        payload.evals[e] = results.out;
       }
     }
 

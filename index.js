@@ -2,6 +2,7 @@ const core = require("@actions/core");
 const exec = require("@actions/exec");
 const github = require("@actions/github");
 const Handlebars = require("handlebars");
+const querystring = require("querystring");
 const { App } = require("@slack/bolt");
 
 const hbOptions = {
@@ -17,7 +18,7 @@ async function run() {
     const channel = core.getInput("channel");
     const raw = core.getInput("raw") || false;
     const message = core.getInput("message");
-    const evalStrings = core.getInput("eval") || "";
+    const evalStrings = querystring.unescape(core.getInput("eval") || "");
     const context = github.context;
 
     core.setSecret(token);

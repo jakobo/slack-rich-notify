@@ -6016,6 +6016,7 @@ const core = __webpack_require__(470);
 const exec = __webpack_require__(986);
 const github = __webpack_require__(469);
 const Handlebars = __webpack_require__(635);
+const querystring = __webpack_require__(191);
 const { App } = __webpack_require__(755);
 
 const hbOptions = {
@@ -6031,7 +6032,7 @@ async function run() {
     const channel = core.getInput("channel");
     const raw = core.getInput("raw") || false;
     const message = core.getInput("message");
-    const evalStrings = core.getInput("eval") || "";
+    const evalStrings = querystring.unescape(core.getInput("eval") || "");
     const context = github.context;
 
     core.setSecret(token);

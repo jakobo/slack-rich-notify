@@ -1,5 +1,4 @@
 const core = require("@actions/core");
-const exec = require("@actions/exec");
 const github = require("@actions/github");
 const Handlebars = require("handlebars");
 const { App } = require("@slack/bolt");
@@ -42,14 +41,14 @@ async function run() {
     core.debug(JSON.stringify(evals));
 
     const payload = {
-      vars: {
+      inputs: {
         channel,
         raw,
         message,
       },
+      context,
       env: process.env,
       eval: {},
-      context,
     };
 
     for (const e of Object.keys(evals)) {

@@ -1263,6 +1263,7 @@ async function run() {
     const evalStrings = core.getInput("evals") || "";
     const context = github.context;
 
+    core.setSecret(channel);
     core.setSecret(token);
     core.setSecret(signingSecret);
 
@@ -1319,7 +1320,8 @@ async function run() {
       }
     }
 
-    core.debug("Formatting with payload: " + JSON.stringify(payload));
+    core.debug("Final message payload");
+    core.debug(JSON.stringify(payload));
 
     let formattedMessage = message;
     if (!raw) {
@@ -1327,6 +1329,7 @@ async function run() {
       core.debug(message);
       formattedMessage = Handlebars.compile(message, hbOptions)(payload);
     } else {
+      core.debug("Raw enabled, skipping message formatting");
       formattedMessage = raw;
     }
 

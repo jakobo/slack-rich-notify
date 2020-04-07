@@ -23,15 +23,24 @@ steps:
       # we are running a `git log` command with specific formatting, and then
       # saving the result to a variable called "changelog"
       #
-      # Supports Handlebars templating
+      # Supports Handlebars templating. Don't forget to escape backticks and
+      # quotes as needed
       evals: |
-        changelog = git --no-pager log --reverse --color=never --pretty='format:•`%h` %s (%ae)' {{context.payload.push.before}}...{{context.payload.push.head}}
+        changelog = git log --reverse --color=never --pretty='tformat:%xe2%x80%xa2 `%h` %s (%ae)' {{context.payload.push.before}}...{{context.payload.push.head}}
       # message - a string to send to Slack
       # Supports Markdown and Handlebars
       message: |
         *Something Got Pushed!*
         `{{context.payload.push.before}}...{{context.payload.push.head}}`
         {{evals.changelog}}
+```
+
+## Using the `evals` Parameter
+
+Many times, slack notifications need additional information such as git commit subjects or the output of running a command. The `evals` block enables you to run arbitrary code and capture it for usage in your slack message. Each line in `evals` is a command.
+
+```
+saveAs = command --to --run remeber_to_escape
 ```
 
 ## What's in `context`?

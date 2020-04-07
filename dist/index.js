@@ -28265,9 +28265,10 @@ module.exports = factory();
 /* 530 */
 /***/ (function(module) {
 
-const cut = (H) => (s, len) => {
-  return H.SafeString(`${s}`.substring(0, len));
-};
+const cut = (H) =>
+  H.registerHelper("cut", (s, len) => {
+    return H.SafeString(`${s}`.substring(0, len));
+  });
 
 module.exports = (H) => {
   cut(H);

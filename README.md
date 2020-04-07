@@ -25,7 +25,7 @@ steps:
       #
       # Supports Handlebars templating
       evals: |
-        changelog = git --no-pager log --reverse --color=never --pretty='format:* %h %s (%ae)' {{context.payload.push.before}}...{{context.payload.push.head}}
+        changelog = git --no-pager log --reverse --color=never --pretty='format:•`%h` %s (%ae)' {{context.payload.push.before}}...{{context.payload.push.head}}
       # message - a string to send to Slack
       # Supports Markdown and Handlebars
       message: |
@@ -52,6 +52,16 @@ The `context` object available to your handlebars template is the same context o
   "action": "1",
   "actor": "nektos/act"
 },
+```
+
+## Formatting with Handlebars
+
+### cut
+
+```hbs
+# reduce a string to its first N characters
+# cut [string]                    [N]
+{{cut context.payload.push.before  8  }}
 ```
 
 # Developing (from original readme)

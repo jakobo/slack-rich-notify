@@ -5776,6 +5776,9 @@ const github = __webpack_require__(469);
 const Handlebars = __webpack_require__(635);
 const { App } = __webpack_require__(755);
 const exec = __webpack_require__(986);
+const hbh = __webpack_require__(530);
+
+hbh(Handlebars);
 
 const hbOptions = {
   data: false,
@@ -28259,7 +28262,19 @@ module.exports = factory();
 
 
 /***/ }),
-/* 530 */,
+/* 530 */
+/***/ (function(module) {
+
+const cut = (H) => (s, len) => {
+  return H.SafeString(`${s}`.substring(0, len));
+};
+
+module.exports = (H) => {
+  cut(H);
+};
+
+
+/***/ }),
 /* 531 */,
 /* 532 */,
 /* 533 */,

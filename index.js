@@ -3,6 +3,9 @@ const github = require("@actions/github");
 const Handlebars = require("handlebars");
 const { App } = require("@slack/bolt");
 const exec = require("@actions/exec");
+const hbh = require("./handlebars-helpers");
+
+hbh(Handlebars);
 
 const hbOptions = {
   data: false,

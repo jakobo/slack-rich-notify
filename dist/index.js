@@ -1298,9 +1298,7 @@ async function run() {
       const command = Handlebars.compile(evals[e], hbOptions)(payload);
       const results = { out: "", err: "" };
       core.debug("Evaluating " + command);
-      await exec.exec(command, {
-        outStream: process.stdout,
-        errStream: process.stderr,
+      await exec.exec(command, [], {
         listeners: {
           stdout: (data) => {
             results.out += data.toString();

@@ -9,13 +9,29 @@ const hbOptions = {
   noEscape: true,
 };
 
+// falsish. Because github action params are always strings
+const falsish = (s) => {
+  if (s === null) {
+    return false;
+  }
+  if (typeof s === "undefined") {
+    return false;
+  }
+  if (typeof s === "boolean") {
+    return s;
+  }
+  if (typeof s === "string") {
+    return s.toLowerCase().trim() === "true";
+  }
+};
+
 // most @actions toolkit packages have async methods
 async function run() {
   try {
     const token = core.getInput("token");
     const signingSecret = core.getInput("secret");
     const channel = core.getInput("channel");
-    const raw = core.getInput("raw") || false;
+    const raw = falsish(core.getInput("raw"));
     const message = core.getInput("message");
     const evalStrings = core.getInput("evals") || "";
     const context = github.context;

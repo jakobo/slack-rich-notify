@@ -67,7 +67,7 @@ async function run() {
 
       const command = Handlebars.compile(evals[e], hbOptions)(payload);
       core.debug("Evaluating " + command);
-      await exec.exec(command);
+      await exec.exec(command, options);
 
       if (myError) {
         throw new Error(myError);

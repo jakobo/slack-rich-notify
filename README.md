@@ -2,7 +2,7 @@
   <a href="https://github.com/aibexhq/slack-notify"><img alt="aibexhq/slack-notify status" src="https://github.com/aibexhq/slack-notify/workflows/units-test/badge.svg"></a>
 </p>
 
-# aibexhq/slack-notify
+# aibexhq/slack-notify (Unstable - In Development)
 
 Because sometimes, you just want a mutliline markdown friendly message sent to slack. With variables.
 

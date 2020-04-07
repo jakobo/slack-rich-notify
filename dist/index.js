@@ -6039,10 +6039,10 @@ async function run() {
 
     // turn our eval strings into actionable commands
     const evals = evalStrings.split(/\n+/g).reduce((a, e) => {
-      const [saveAs, cmd] = e.split(/\s*=\s*/).map((p) => p.trim());
+      const [saveAs, ...cmd] = e.split(/=/g);
       return {
         ...a,
-        [saveAs]: cmd,
+        [saveAs.trim()]: cmd.join("=").trim(),
       };
     }, {});
 

@@ -3,6 +3,7 @@ const exec = require("@actions/exec");
 const github = require("@actions/github");
 const Handlebars = require("handlebars");
 const { App } = require("@slack/bolt");
+const execa = require("execa");
 
 const hbOptions = {
   data: false,
@@ -53,26 +54,16 @@ async function run() {
 
     for (const e of Object.keys(evals)) {
       // from https://github.com/actions/toolkit/tree/master/packages/exec
-      let output = "";
-      let errors = "";
-      const options = {};
-      options.listeners = {
-        stdout: (data) => {
-          output += data.toString();
-        },
-        stderr: (data) => {
-          errors += data.toString();
-        },
-      };
-
+      // or execa...
       const command = Handlebars.compile(evals[e], hbOptions)(payload);
-
       core.debug("Evaluating " + command);
-      await exec.exec(command, options);
-      if (errors.length) {
-        throw new Error(errors);
+      const result = await execa(command);
+
+      if (result.exitCode !== 0) {
+        throw new Error(result.stderr.toString());
       }
-      payload.eval[e] = output;
+
+      payload.eval[e] = result.stdout.toString();
     }
 
     core.debug("Formatting with payload: " + JSON.stringify(payload));

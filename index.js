@@ -1,7 +1,7 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 const Handlebars = require("handlebars");
-const { App } = require("@slack/bolt");
+// const { App } = require("@slack/bolt");
 const exec = require("@actions/exec");
 
 const hbOptions = {
@@ -32,13 +32,10 @@ async function run() {
       };
     }, {});
 
-    const app = new App({
-      token,
-      signingSecret,
-    });
-
-    core.debug("Eval Statements:");
-    core.debug(JSON.stringify(evals));
+    // const app = new App({
+    //   token,
+    //   signingSecret,
+    // });
 
     const payload = {
       inputs: {
@@ -48,11 +45,8 @@ async function run() {
       },
       context,
       env: process.env,
-      eval: {},
+      evals: {},
     };
-
-    core.debug("Handlebars payload");
-    core.debug(JSON.stringify(payload));
 
     for (const e of Object.keys(evals)) {
       // from https://github.com/actions/toolkit/tree/master/packages/exec
@@ -76,7 +70,7 @@ async function run() {
       if (myError) {
         throw new Error(myError);
       } else {
-        payload.eval[e] = myOutput;
+        payload.evals[e] = myOutput;
       }
     }
 
@@ -98,7 +92,7 @@ async function run() {
     // });
 
     core.setOutput("message", formattedMessage);
-    core.debug("Slack result", result);
+    // core.debug("Slack result", result);
   } catch (error) {
     core.setFailed(error.message);
   }

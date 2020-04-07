@@ -56,6 +56,8 @@ async function run() {
       const results = { out: "", err: "" };
       core.debug("Evaluating " + command);
       await exec.exec(command, {
+        outStream: process.stdout,
+        errStream: process.stderr,
         listeners: {
           stdout: (data) => {
             results.out += data.toString();

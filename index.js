@@ -1,7 +1,7 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 const Handlebars = require("handlebars");
-// const { App } = require("@slack/bolt");
+const { App } = require("@slack/bolt");
 const exec = require("@actions/exec");
 
 const hbOptions = {
@@ -50,11 +50,6 @@ async function run() {
           };
         }, {})
       : {};
-
-    // const app = new App({
-    //   token,
-    //   signingSecret,
-    // });
 
     const payload = {
       inputs: {
@@ -109,14 +104,19 @@ async function run() {
     core.debug("Message to send:");
     core.debug(formattedMessage);
 
-    // const result = await app.client.chat.postMessage({
-    //   token,
-    //   channel,
-    //   text: formattedMessage,
-    // });
+    const app = new App({
+      token,
+      signingSecret,
+    });
+
+    const result = await app.client.chat.postMessage({
+      token,
+      channel,
+      text: formattedMessage,
+    });
 
     core.setOutput("message", formattedMessage);
-    // core.debug("Slack result", result);
+    core.debug("Slack result", result);
   } catch (error) {
     core.setFailed(error.message);
   }

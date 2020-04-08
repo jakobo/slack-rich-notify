@@ -1,5 +1,7 @@
-name: "Slack Notification"
+name: "Slack Rich Notification"
 description: "Send a slack message, supporting Markdown and Multiline text"
+icon: cast
+color: purple
 inputs:
   token:
     description: Your Slack bot token (from your App's "OAuth & Permissions" page)

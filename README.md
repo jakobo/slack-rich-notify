@@ -161,7 +161,7 @@ Users shouldn't consume the action from master since that would be latest code a
 Checkin to the v(x) release branch
 
 ```bash
-$ git checkout -b v1
+$ git checkout -b v(x)
 $ git commit -a -m "v(x) release"
 ```
 

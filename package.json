@@ -1,7 +1,8 @@
 {
   "name": "slack-notify",
-  "version": "1.0.1",
-  "description": "A Github Action for Slack messages with markdown, multiline, and variables",
+  "private": true,
+  "version": "1.0.2",
+  "description": "A Github Action for Slack with markdown, multiline messages, and variables",
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js",

@@ -2,7 +2,7 @@
   <a href="https://github.com/aibexhq/slack-notify"><img alt="aibexhq/slack-notify status" src="https://github.com/aibexhq/slack-notify/workflows/units-test/badge.svg"></a>
 </p>
 
-# aibexhq/slack-notify (Unstable - In Development)
+# aibexhq/slack-notify@v1.0.2
 
 Because sometimes, you just want a mutliline markdown friendly message sent to slack. With variables.
 
@@ -13,7 +13,7 @@ steps:
   - name: Checkout
     uses: actions/checkout@v2
   - name: Notifying via Slack
-    uses: aibexhq/slack-notify@v1.0.1
+    uses: aibexhq/slack-notify@v1.0.2
     with:
       token: ${{secrets.SLACK_BOT_KEY}} # your slack bot key
       secret: ${{secrets.SLACK_SIGNING_SECRET}} # your slack signing secret
@@ -37,7 +37,7 @@ steps:
 
 # Table of Contents
 
-- [aibexhq/slack-notify (Unstable - In Development)](#aibexhqslack-notify-unstable---in-development)
+- [aibexhq/slack-notify@v1.0.2](#aibexhqslack-notifyv102)
 - [Usage](#usage)
 - [Table of Contents](#table-of-contents)
 - [Action Parameters](#action-parameters)

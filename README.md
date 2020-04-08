@@ -130,7 +130,7 @@ Shell commands and the Slack message both support formatting with the [Handlebar
 
 ### Accepting PRs for Handlebars Helpers
 
-At creation, it amde sense to only include _the absolutel minimum_ helpers that would make writing scripts and Slack messages easier. For example, `cut` offers a convienent way to shorten `sha1` hashes. If you have ideas, open an issue or PR. We just ask that you incldue an example of how this helps compared to regular 'ole bash scripting. (And yes, "the bashism to do X is absurd" is valid)
+At creation, it made sense to only include _the absolute minimum_ helpers that would make writing scripts and Slack messages easier. For example, `cut` offers a convienent way to shorten `sha1` hashes. If you have ideas, open an issue or PR. We just ask that you incldue an example of how this helps compared to regular 'ole bash scripting. (And yes, "the bashism to do X is absurd" is valid)
 
 # Developing (from original readme)
 

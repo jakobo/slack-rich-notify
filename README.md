@@ -35,43 +35,102 @@ steps:
         {{evals.changelog}}
 ```
 
-## Using the `evals` Parameter
+# Table of Contents
 
-Many times, slack notifications need additional information such as git commit subjects or the output of running a command. The `evals` block enables you to run arbitrary code and capture it for usage in your slack message. Each line in `evals` is a command.
+- [aibexhq/slack-notify (Unstable - In Development)](#aibexhqslack-notify-unstable---in-development)
+- [Usage](#usage)
+- [Table of Contents](#table-of-contents)
+- [Action Parameters](#action-parameters)
+  - [Finding Your Slack Settings](#finding-your-slack-settings)
+- [Using the `evals` Parameter](#using-the-evals-parameter)
+- [Handlebars Usage](#handlebars-usage)
+  - [What's in that `context` object?](#whats-in-that-context-object)
+  - [Formatting with Handlebars](#formatting-with-handlebars)
+    - [cut (Handlebars Helper)](#cut-handlebars-helper)
+    - [Accepting PRs for Handlebars Helpers](#accepting-prs-for-handlebars-helpers)
+- [Developing (from original readme)](#developing-from-original-readme)
+  - [Package for distribution](#package-for-distribution)
+  - [Create a release branch](#create-a-release-branch)
+
+# Action Parameters
+
+| name      | description                                                                                                                                                                                                                                                                                                                          |
+| :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `channel` | :warning: **Should be loaded as a Github Secret**<br>Your Slack channel ID you wish to post to.                                                                                                                                                                                                                                      |
+| `evals`   | A list of newline-delimited commands to run in order to create variables for your slack message. See [the section on evals](#using-the-evals-parameter) for details                                                                                                                                                                  |
+| `message` | The slack message to send                                                                                                                                                                                                                                                                                                            |
+| `secret`  | :warning: **Should be loaded as a Github Secret**<br>Your Slack Bot's Signing Secret. We use [@slack/bolt](https://slack.dev/bolt/) for composing messages to avoid maintaining as much code as possible. Bolt requires a signing secret on initialization, even if we're not planning to listen for inbound requests.               |
+| `token`   | :warning: **Should be loaded as a Github Secret**<br>Your Slack Bot token, beginning with `xoxb-`. Bot tokens are more resilient than webhook tokens. You'll need the `chat:write`, `chat:write.customize`, and `chat:write.public` permissions **at a minimum** to be able to send messages to any channel in your Slack workspace. |
+
+## Finding Your Slack Settings
+
+- `token`: `https://api.slack.com/apps` > `<your app>` > `OAuth & Permissions` > `field named: "Bot User OAuth Access Token"`
+- `secret`: `https://api.slack.com/apps` > `<your app>` > `section named: "App Credentials"` > `field named: "Client Secret"`
+- `channel`:
+  - **On Desktop** `right click channel and select "Copy Link"` > `https://aibex.slack.com/archives/[this-is-your-channel-id]` (it should begin with `C`)
+  - **On Web** `select your channel from the sidebar` > `https://app.slack.com/client/[this-is-your-team]/[this-is-your-channel-id]` (it should begin with `C`)
+
+# Using the `evals` Parameter
+
+Many times, slack notifications need additional information such as git commit subjects or the output of running a shell command. The `evals` block enables you to run any command available via shell code and capture it for usage in your slack message. Each line in `evals` is a command.
 
 ```
 saveAs = command --to --run remeber_to_escape
 ```
 
-## What's in `context`?
+Commands are spawned using [@actions/exec](https://github.com/actions/toolkit/tree/master/packages/exec) with `stdout` and `stderr` captured for cross platform compatibility.
 
-The `context` object available to your handlebars template is the same context object used by [Octokit](https://github.com/actions/toolkit/tree/master/packages/github). It contains a `payload` object which is your webhook payload, along with a variety of other items including `sha`, `ref`, `workflow` and more.
+Each evaluated line is saved to the lefthand side of the assignment and available in all future commands and slack messages as `{{evals.__your_saved_name__}}`.
 
-```json
-"context": {
-  "payload": {
-    "pull_request": {
-      /* Specific based on type of event */
-    }
-  },
-  "eventName": "pull_request",
-  "sha": "94933e1fe203d34a3ed73033c6fb04eb07715de4",
-  "ref": "refs/heads/jakobo/docker_smash_2",
-  "workflow": "Pilot",
-  "action": "1",
-  "actor": "nektos/act"
-},
+# Handlebars Usage
+
+## What's in that `context` object?
+
+The `context` object available to your handlebars template is the same context object used by [Octokit](https://github.com/actions/toolkit/tree/master/packages/github). It contains a `payload` object which is your [webhook payload](https://developer.github.com/v3/activity/events/types/), along with a variety of other items connected to your Job, including `sha`, `ref`, and `workflow`.
+
+```js
+{
+  //...
+  "context": {
+    "payload": {
+      "pull_request": {
+        /* Specific based on type of event */
+      }
+    },
+    "eventName": "pull_request",
+    "sha": "94933e1fe203d34a3ed73033c6fb04eb07715de4",
+    "ref": "refs/heads/jakobo/docker_smash_2",
+    "workflow": "Pilot",
+    "action": "1",
+    "actor": "nektos/act"
+  }
+}
 ```
 
 ## Formatting with Handlebars
 
-### cut
+Shell commands and the Slack message both support formatting with the [Handlebars](https://handlebarsjs.com/) template engine. You'll receive the following variables inside of the Handlebars template:
+
+| name                | type   | description                                                                            |
+| :------------------ | :----- | :------------------------------------------------------------------------------------- |
+| `context.payload`   | object | Contains the [webhook payload](https://developer.github.com/v3/activity/events/types/) |
+| `context.eventName` | string | One of the triggering Github Action events                                             |
+| `env.*`             | object | Contains the current `process.env` as of script execution                              |
+| `evals.*`           | object | Contains the assigned output from the `evals` parameter in this action                 |
+| `inputs.*`          | object | Contains the inputs `message`, `raw`, and `channel` as provided to this action         |
+
+### cut (Handlebars Helper)
 
 ```hbs
 # reduce a string to its first N characters
+# useful for constructing things such as short hashes
 # cut [string]                    [N]
 {{cut context.payload.push.before  8  }}
 ```
+
+### Accepting PRs for Handlebars Helpers
+
+At creation, it amde sense to only include _the absolutel minimum_ helpers that would make writing scripts and Slack messages easier. For example, `cut` offers a convienent way to shorten `sha1` hashes. If you have ideas, open an issue or PR. We just ask that you incldue an example of how this helps compared to regular 'ole bash scripting. (And yes, "the bashism to do X is absurd" is valid)
 
 # Developing (from original readme)
 
@@ -99,15 +158,15 @@ git add dist
 
 Users shouldn't consume the action from master since that would be latest code and actions can break compatibility between major versions.
 
-Checkin to the v1 release branch
+Checkin to the v(x) release branch
 
 ```bash
 $ git checkout -b v1
-$ git commit -a -m "v1 release"
+$ git commit -a -m "v(x) release"
 ```
 
 ```bash
-$ git push origin v1
+$ git push origin v(x)
 ```
 
 Your action is now published! :rocket:

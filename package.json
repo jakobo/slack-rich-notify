@@ -1,7 +1,7 @@
 {
   "name": "slack-notify",
-  "version": "1.0.0",
-  "description": "A Markdown and Multiline Friendly Slack Notifier",
+  "version": "1.0.1",
+  "description": "A Github Action for Slack messages with markdown, multiline, and variables",
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js",
@@ -17,7 +17,7 @@
     "Actions",
     "JavaScript"
   ],
-  "author": "GitHub",
+  "author": "Aibex, Inc",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/aibexhq/slack-notify/issues"
@@ -28,7 +28,6 @@
     "@actions/exec": "^1.0.3",
     "@actions/github": "^2.1.1",
     "@slack/bolt": "^2.0.0",
-    "execa": "^4.0.0",
     "handlebars": "^4.7.6"
   },
   "devDependencies": {

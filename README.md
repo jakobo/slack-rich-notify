@@ -2,7 +2,7 @@
   <a href="https://github.com/aibexhq/slack-notify"><img alt="aibexhq/slack-notify status" src="https://github.com/aibexhq/slack-notify/workflows/units-test/badge.svg"></a>
 </p>
 
-# aibexhq/slack-notify@v1.0.2
+# aibexhq/slack-rich-notify@v2.0.0
 
 Because sometimes, you just want a mutliline markdown friendly message sent to slack. With variables.
 
@@ -13,7 +13,7 @@ steps:
   - name: Checkout
     uses: actions/checkout@v2
   - name: Notifying via Slack
-    uses: aibexhq/slack-notify@v1.0.2
+    uses: aibexhq/slack-rich-notify@v2.0.0
     with:
       token: ${{secrets.SLACK_BOT_KEY}} # your slack bot key
       secret: ${{secrets.SLACK_SIGNING_SECRET}} # your slack signing secret
@@ -37,7 +37,7 @@ steps:
 
 # Table of Contents
 
-- [aibexhq/slack-notify@v1.0.2](#aibexhqslack-notifyv102)
+- [aibexhq/slack-rich-notify@v2.0.0](#aibexhqslack-rich-notifyv200)
 - [Usage](#usage)
 - [Table of Contents](#table-of-contents)
 - [Action Parameters](#action-parameters)
@@ -95,9 +95,8 @@ If you'd like to dump the payload in your action to see what you need, I highly 
   //...
   "context": {
     "payload": {
-      "pull_request": {
-        /* Specific based on type of event */
-      }
+      /* Specific based on type of event, sample below */
+      "pull_request": {}
     },
     "eventName": "pull_request",
     "sha": "94933e1fe203d34a3ed73033c6fb04eb07715de4",
@@ -127,7 +126,7 @@ Shell commands and the Slack message both support formatting with the [Handlebar
 # reduce a string to its first N characters
 # useful for constructing things such as short hashes
 # cut [string]                    [N]
-{{cut context.payload.push.before  8  }}
+{{cut context.payload.before  8  }}
 ```
 
 ### Accepting PRs for Handlebars Helpers

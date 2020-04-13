@@ -13,15 +13,21 @@ inputs:
   channel:
     description: Channel to send your message to
     required: true
-  raw:
-    description: Do not process the message using Handlebars
-    default: false
   message:
     description: The message to send. Use a pipe (|) in YAML for multiline strings
     required: true
   evals:
     description: A collection of scripts/commands to run before populating the message. Each key will be mapped to evals.<key> in the Handlebars render
     required: false
+  raw:
+    description: Do not process the message using Handlebars
+    default: false
+  dump:
+    description: Dump the handlebars context (useful for debugging). Secrets are masked.
+    default: false
+  dry-run:
+    description: Do not perform a slack notification (useful for testing)
+    default: false
 outputs:
   message: # output will be available to future steps
     description: The final Slack mesage that was generated

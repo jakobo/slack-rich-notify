@@ -5290,6 +5290,8 @@ async function run() {
     const signingSecret = core.getInput("secret");
     const channel = core.getInput("channel");
     const raw = falsish(core.getInput("raw"));
+    const dry = falsish(core.getInput("dry-run"));
+    const dump = falsish(core.getInput("dump"));
     const message = core.getInput("message");
     const evalStrings = core.getInput("evals") || "";
     const context = github.context;
@@ -5362,19 +5364,30 @@ async function run() {
     core.debug("Message to send:");
     core.debug(formattedMessage);
 
-    const app = new App({
-      token,
-      signingSecret,
-    });
+    if (dump) {
+      console.log("--- DUMPED CONTEXT ---");
+      console.log(JSON.stringify(data, null, 2));
+    }
 
-    const result = await app.client.chat.postMessage({
-      token,
-      channel,
-      text: formattedMessage,
-    });
+    if (dry) {
+      console.log("--- DRY RUN ---");
+      console.log(formattedMessage);
+      console.log("--- NO SLACK MESSAGES SENT ---");
+    } else {
+      // actually perform slack notification via bolt
+      const app = new App({
+        token,
+        signingSecret,
+      });
 
-    core.setOutput("message", formattedMessage);
-    core.debug("Slack result", result);
+      const result = await app.client.chat.postMessage({
+        token,
+        channel,
+        text: formattedMessage,
+      });
+
+      core.debug("Slack result", result);
+    }
   } catch (error) {
     core.setFailed(error.message);
   }

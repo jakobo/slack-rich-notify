@@ -9,6 +9,7 @@
     "package": "ncc build index.js -o dist",
     "test": "eslint index.js && echo \"yolo\" && exit 0",
     "---": "echo \"--- Utility Scripts ---\"",
+    "commit:pkg": "yarn package && git add dist",
     "commit:cz": "exec < /dev/tty && git-cz --hook || true",
     "lint-staged": "lint-staged --shell"
   },
@@ -40,7 +41,7 @@
     "commitlint-config-gitmoji": "^1.0.1",
     "conventional-changelog-conventionalcommits": "^4.2.3",
     "cz-emoji": "^1.2.1",
-    "eslint": "^6.3.0",
+    "eslint": "^6.8.0",
     "husky": "^4.2.5",
     "jest": "^24.9.0",
     "lint-staged": "^10.1.3",
@@ -48,7 +49,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint-staged --shell",
+      "pre-commit": "yarn commit:pkg && yarn lint-staged --shell",
       "post-commit": "git update-index --again",
       "prepare-commit-msg": "if [ -t 1 ] ; then yarn run commit:cz; fi"
     }

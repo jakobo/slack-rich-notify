@@ -1,5 +1,4 @@
 {
   "*.js": ["yarn lint --fix", "prettier --write"],
-  "*.json": ["prettier --write"],
-  "*.md": ["prettier --write"]
+  "*.{json,md,yml,yaml}": ["prettier --write"]
 }

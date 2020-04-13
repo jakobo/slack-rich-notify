@@ -57,6 +57,8 @@ steps:
 | name      | description                                                                                                                                                                                                                                                                                                                          |
 | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `channel` | :warning: **Should be loaded as a Github Secret**<br>Your Slack channel ID you wish to post to.                                                                                                                                                                                                                                      |
+| `dry-run` | Do not perform a slack notification, instead dumping the message to your Github Action output                                                                                                                                                                                                                                        |
+| `dump`    | Dump the contents of your payload used to format Handlebars messages. `channel`, `secret`, and `token` are masked                                                                                                                                                                                                                    |
 | `evals`   | A list of newline-delimited commands to run in order to create variables for your slack message. See [the section on evals](#using-the-evals-parameter) for details                                                                                                                                                                  |
 | `message` | The slack message to send                                                                                                                                                                                                                                                                                                            |
 | `secret`  | :warning: **Should be loaded as a Github Secret**<br>Your Slack Bot's Signing Secret. We use [@slack/bolt](https://slack.dev/bolt/) for composing messages to avoid maintaining as much code as possible. Bolt requires a signing secret on initialization, even if we're not planning to listen for inbound requests.               |
@@ -86,9 +88,9 @@ Each evaluated line is saved to the lefthand side of the assignment and availabl
 
 ## What's in that `context` object?
 
-The `context` object available to your handlebars template is the same context object used by [Octokit](https://github.com/actions/toolkit/tree/master/packages/github). It contains a `payload` object which is your [webhook payload](https://developer.github.com/v3/activity/events/types/), along with a variety of other items connected to your Job, including `sha`, `ref`, and `workflow`.
+![View The Context In a Job](https://github.com/aibexhq/slack-rich-notify/workflows/Demo%20Output/badge.svg?branch=master&event=push)
 
-If you'd like to dump the payload in your action to see what you need, I highly recommend the [payload-info-action](https://github.com/Dovyski/payload-info-action) step as it uses the same `github.context` object.
+The `context` object available to your handlebars template is the same context object used by [Octokit](https://github.com/actions/toolkit/tree/master/packages/github). It contains a `payload` object which is your [webhook payload](https://developer.github.com/v3/activity/events/types/), along with a variety of other items connected to your Job, including `sha`, `ref`, and `workflow`.
 
 ```js
 {

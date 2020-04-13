@@ -8,17 +8,19 @@ jobs:
   notify-dry-run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./
-          with:
-            dry-run: true
-            dump: true
-            token: "secrets.SLACK_BOT_KEY"
-            secret: "secrets.SLACK_SIGNING_SECRET"
-            channel: "secrets.SLACK_CHANNEL"
-            evals: |
-              changelog = git --no-pager log --reverse --color=never --pretty="format:• `%h` %s (%ae)" {{context.payload.before}}...HEAD
-            message: |
-              *Sample Slack Message:*
-              `{{cut context.payload.before 8}}...{{cut env.GITHUB_SHA 8}}`
-              {{evals.changelog}}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: "Sample Dry Run of Slack Notification"
+        uses: ./
+        with:
+          dry-run: true
+          dump: true
+          token: "secrets.SLACK_BOT_KEY"
+          secret: "secrets.SLACK_SIGNING_SECRET"
+          channel: "secrets.SLACK_CHANNEL"
+          evals: |
+            changelog = git --no-pager log --reverse --color=never --pretty="format:• `%h` %s (%ae)" {{context.payload.before}}...HEAD
+          message: |
+            *Sample Slack Message:*
+            `{{cut context.payload.before 8}}...{{cut env.GITHUB_SHA 8}}`
+            {{evals.changelog}}

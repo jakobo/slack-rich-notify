@@ -1,5 +1,5 @@
 {
-  "name": "slack-notify",
+  "name": "slack-rich-notify",
   "private": true,
   "version": "1.0.2",
   "description": "A Github Action for Slack with markdown, multiline messages, and variables",
@@ -7,11 +7,14 @@
   "scripts": {
     "lint": "eslint index.js",
     "package": "ncc build index.js -o dist",
-    "test": "eslint index.js && echo \"yolo\" && exit 0"
+    "test": "eslint index.js && echo \"yolo\" && exit 0",
+    "---": "echo \"--- Utility Scripts ---\"",
+    "commit:cz": "exec < /dev/tty && git-cz --hook || true",
+    "lint-staged": "lint-staged --shell"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aibexhq/slack-notify.git"
+    "url": "git+https://github.com/aibexhq/slack-rich-notify.git"
   },
   "keywords": [
     "GitHub",
@@ -21,9 +24,9 @@
   "author": "Aibex, Inc",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/aibexhq/slack-notify/issues"
+    "url": "https://github.com/aibexhq/slack-rich-notify/issues"
   },
-  "homepage": "https://github.com/aibexhq/slack-notify#readme",
+  "homepage": "https://github.com/aibexhq/slack-rich-notify#readme",
   "dependencies": {
     "@actions/core": "^1.1.1",
     "@actions/exec": "^1.0.3",
@@ -33,7 +36,21 @@
   },
   "devDependencies": {
     "@zeit/ncc": "^0.20.5",
+    "commitizen": "^4.0.4",
+    "commitlint-config-gitmoji": "^1.0.1",
+    "conventional-changelog-conventionalcommits": "^4.2.3",
+    "cz-emoji": "^1.2.1",
     "eslint": "^6.3.0",
-    "jest": "^24.9.0"
+    "husky": "^4.2.5",
+    "jest": "^24.9.0",
+    "lint-staged": "^10.1.3",
+    "prettier": "^2.0.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint-staged --shell",
+      "post-commit": "git update-index --again",
+      "prepare-commit-msg": "if [ -t 1 ] ; then yarn run commit:cz; fi"
+    }
   }
 }

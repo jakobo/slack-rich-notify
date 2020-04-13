@@ -88,6 +88,8 @@ Each evaluated line is saved to the lefthand side of the assignment and availabl
 
 The `context` object available to your handlebars template is the same context object used by [Octokit](https://github.com/actions/toolkit/tree/master/packages/github). It contains a `payload` object which is your [webhook payload](https://developer.github.com/v3/activity/events/types/), along with a variety of other items connected to your Job, including `sha`, `ref`, and `workflow`.
 
+If you'd like to dump the payload in your action to see what you need, I highly recommend the [payload-info-action](https://github.com/Dovyski/payload-info-action) step as it uses the same `github.context` object.
+
 ```js
 {
   //...

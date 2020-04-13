@@ -17,14 +17,23 @@ const falsish = (s) => {
   if (s === null) {
     return false;
   }
-  if (typeof s === "undefined") {
-    return false;
-  }
-  if (typeof s === "boolean") {
-    return s;
-  }
-  if (typeof s === "string") {
-    return s.toLowerCase().trim() === "true";
+
+  let res = false;
+  switch (typeof s) {
+    case "undefined":
+      return false;
+    case "boolean":
+      return s;
+    case "string":
+      res = false;
+
+      // literal true
+      res = res || s.toLowerCase().trim() === "true";
+
+      // number > 0
+      res = res || parseInt(s, 10) > 0;
+
+      return res;
   }
 };
 

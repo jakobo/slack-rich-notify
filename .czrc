@@ -1,0 +1,88 @@
+{
+  "path": "cz-emoji",
+  "config": {
+    "cz-emoji": {
+      "skipQuestions": ["scope"],
+      "types": [
+        {
+          "emoji": "✨",
+          "code": "✨ Feat:",
+          "description": "A new feature or functionality",
+          "name": "Feat"
+        },
+        {
+          "emoji": "🐛",
+          "code": "🐛 Fix:",
+          "description": "Fixing code",
+          "name": "Fix"
+        },
+        {
+          "emoji": "🚑",
+          "code": "🚑 Hotfix:",
+          "description": "Bypassing some safety, this needs to go straight to production!",
+          "name": "Hotfix"
+        },
+        {
+          "emoji": "📝",
+          "code": "📝 Docs:",
+          "description": "Documentation only changes",
+          "name": "Docs"
+        },
+        {
+          "emoji": "🎨",
+          "code": "🎨 Style:",
+          "description": "Improving the style/structure of the code",
+          "name": "Style"
+        },
+        {
+          "emoji": "♻️",
+          "code": "♻️ Refactor:",
+          "description": "A code change that does not alter public facing APIs",
+          "name": "Refactor"
+        },
+        {
+          "emoji": "⚡️",
+          "code": "⚡️ Perf:",
+          "description": "Improves Performance",
+          "name": "Perf"
+        },
+        {
+          "emoji": "✅",
+          "code": "✅ Test:",
+          "description": "Adds, Removes, or Fixes something related to tests",
+          "name": "Test"
+        },
+        {
+          "emoji": "⬆️",
+          "code": "⬆️ Upgrade:",
+          "description": "Upgrades dependencies",
+          "name": "Upgrade"
+        },
+        {
+          "emoji": "⬇️",
+          "code": "⬇️ Downgrade:",
+          "description": "Downgrades or Removes dependencies",
+          "name": "Downgrade"
+        },
+        {
+          "emoji": "📌",
+          "code": "📌 Pin:",
+          "description": "Pin a dependency to a specific version",
+          "name": "Pin"
+        },
+        {
+          "emoji": "🧹",
+          "code": "🧹 Chore:",
+          "description": "Misc changes, often by automated systems",
+          "name": "Chore"
+        },
+        {
+          "emoji": "🚧",
+          "code": "🚧 WIP:",
+          "description": "Work in Progress (rebase these out!)",
+          "name": "WIP"
+        }
+      ]
+    }
+  }
+}

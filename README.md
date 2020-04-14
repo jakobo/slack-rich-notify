@@ -101,7 +101,7 @@ steps:
 
 ## What's in that `context` object?
 
-![View The Context In a Job](https://github.com/aibexhq/slack-rich-notify/workflows/Demo%20Output/badge.svg?branch=master&event=push)
+![View The Context In a Job](https://github.com/aibexhq/slack-rich-notify/workflows/Demo%20Output/badge.svg?branch=master&event=push) [View A Sample Dumped Context](https://github.com/aibexhq/slack-rich-notify/actions?query=workflow%3A%22Demo+Output%22)
 
 The `context` object available to your handlebars template is the same context object used by [Octokit](https://github.com/actions/toolkit/tree/master/packages/github). It contains a `payload` object which is your [webhook payload](https://developer.github.com/v3/activity/events/types/), along with a variety of other items connected to your Job, including `sha`, `ref`, and `workflow`.
 

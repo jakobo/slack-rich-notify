@@ -5322,6 +5322,11 @@ async function run() {
       evals: {},
     };
 
+    if (dump) {
+      console.log("--- DUMPED CONTEXT (PRE-EVALS) ---");
+      console.log(JSON.stringify(data, null, 2));
+    }
+
     for (const e of Object.keys(evals)) {
       // from https://github.com/actions/toolkit/tree/master/packages/exec
       const command = Handlebars.compile(evals[e], hbOptions)(data);
@@ -5365,7 +5370,7 @@ async function run() {
     core.debug(formattedMessage);
 
     if (dump) {
-      console.log("--- DUMPED CONTEXT ---");
+      console.log("--- DUMPED CONTEXT (POST-EVALS) ---");
       console.log(JSON.stringify(data, null, 2));
     }
 

@@ -81,6 +81,12 @@
           "code": "🚧 WIP:",
           "description": "Work in Progress (rebase these out!)",
           "name": "WIP"
+        },
+        {
+          "emoji": "🚀",
+          "code": "🚀 Release:",
+          "description": "Release of version",
+          "name": "Release"
         }
       ]
     }

@@ -1,7 +1,7 @@
 {
   "name": "slack-rich-notify",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A Github Action for Slack with markdown, multiline messages, and variables",
   "main": "index.js",
   "scripts": {

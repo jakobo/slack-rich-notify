@@ -19,8 +19,8 @@ jobs:
           secret: "secrets.SLACK_SIGNING_SECRET"
           channel: "secrets.SLACK_CHANNEL"
           evals: |
-            changelog = git --no-pager log --reverse --color=never --pretty="format:• `%h` %s (%ae)" {{context.payload.before}}...HEAD
+            changelog = git --no-pager log --reverse --color=never --pretty="format:• `%h` %s (%ae)" {{context.payload.before}}...{{context.payload.after}}
           message: |
             *Sample Slack Message:*
-            `{{cut context.payload.before 8}}...{{cut env.GITHUB_SHA 8}}`
+            `{{cut context.payload.before 8}}...{{cut context.payload.after 8}}`
             {{evals.changelog}}

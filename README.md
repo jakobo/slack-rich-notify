@@ -43,6 +43,7 @@ steps:
 - [Action Parameters](#action-parameters)
   - [Finding Your Slack Settings](#finding-your-slack-settings)
 - [Using the `evals` Parameter](#using-the-evals-parameter)
+  - [If running git operations](#if-running-git-operations)
 - [Handlebars Usage](#handlebars-usage)
   - [What's in that `context` object?](#whats-in-that-context-object)
   - [Formatting with Handlebars](#formatting-with-handlebars)
@@ -83,6 +84,18 @@ saveAs = command --to --run remeber_to_escape
 Commands are spawned using [@actions/exec](https://github.com/actions/toolkit/tree/master/packages/exec) with `stdout` and `stderr` captured for cross platform compatibility.
 
 Each evaluated line is saved to the lefthand side of the assignment and available in all future commands and slack messages as `{{evals.__your_saved_name__}}`.
+
+## If running git operations
+
+If you're planning on calling git operations, remember to update your checkout to **fetch all history**. By default, Github Actions only check out the most recent commit for the purpose of tests. Setting a `fetch-depth` of `0` will enable you to call git commands that span your repo's history.
+
+```yaml
+steps:
+  - name: Checkout
+    uses: actions/checkout@v2
+    with:
+      fetch-depth: 0 # all history required
+```
 
 # Handlebars Usage
 

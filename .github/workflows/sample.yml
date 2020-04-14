@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Fetch all history
+        run: git fetch --prune --unshallow
       - name: "Sample Dry Run of Slack Notification"
         uses: ./
         with:

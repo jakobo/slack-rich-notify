@@ -3,13 +3,15 @@
   "private": true,
   "version": "2.0.1",
   "description": "A Github Action for Slack with markdown, multiline messages, and variables",
+  "author": "Aibex, Inc <oss@aibex.com>",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js",
     "package": "ncc build index.js -o dist",
     "test": "eslint index.js && echo \"yolo\" && exit 0",
     "---": "echo \"--- Utility Scripts ---\"",
-    "commit:pkg": "yarn package && git add dist",
+    "commit:pkg": "npm run package && git add dist",
     "commit:cz": "exec < /dev/tty && git-cz --hook || true",
     "lint-staged": "lint-staged --shell"
   },
@@ -22,8 +24,6 @@
     "Actions",
     "JavaScript"
   ],
-  "author": "Aibex, Inc",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/aibexhq/slack-rich-notify/issues"
   },
@@ -49,9 +49,9 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn commit:pkg && yarn lint-staged --shell",
+      "pre-commit": "npm run commit:pkg && npm run lint-staged --shell",
       "post-commit": "git update-index --again",
-      "prepare-commit-msg": "if [ -t 1 ] ; then yarn run commit:cz; fi"
+      "prepare-commit-msg": "if [ -t 1 ] ; then npm run commit:cz; fi"
     }
   }
 }

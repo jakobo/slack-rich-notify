@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aibexhq/slack-rich-notify.git"
+    "url": "git+https://github.com/aibex/slack-rich-notify.git"
   },
   "keywords": [
     "GitHub",
@@ -25,9 +25,9 @@
     "JavaScript"
   ],
   "bugs": {
-    "url": "https://github.com/aibexhq/slack-rich-notify/issues"
+    "url": "https://github.com/aibex/slack-rich-notify/issues"
   },
-  "homepage": "https://github.com/aibexhq/slack-rich-notify#readme",
+  "homepage": "https://github.com/aibex/slack-rich-notify#readme",
   "dependencies": {
     "@actions/core": "^1.1.1",
     "@actions/exec": "^1.0.3",

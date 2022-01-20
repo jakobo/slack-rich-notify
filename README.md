@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/aibex/slack-notify"><img alt="aibex/slack-notify status" src="https://github.com/aibex/slack-notify/workflows/units-test/badge.svg"></a>
+  <a href="https://github.com/aibex/slack-rich-notify"><img alt="aibex/slack-rich-notify status" src="https://github.com/aibex/slack-rich-notify/workflows/units-test/badge.svg"></a>
 </p>
 
 # aibex/slack-rich-notify@v2.0.1

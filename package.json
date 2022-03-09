@@ -1,13 +1,14 @@
 {
   "name": "slack-rich-notify",
   "private": true,
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "A Github Action for Slack with markdown, multiline messages, and variables",
-  "author": "Aibex, Inc <oss@aibex.com>",
+  "author": "Jakob Heuser <jakob@codedrift.com>",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js",
+    "lint:commit": "commitlint --edit \"$1\"",
     "package": "ncc build index.js -o dist",
     "test": "eslint index.js && echo \"yolo\" && exit 0",
     "---": "echo \"--- Utility Scripts ---\"",
@@ -17,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aibex/slack-rich-notify.git"
+    "url": "git+https://github.com/jakobo/slack-rich-notify.git"
   },
   "keywords": [
     "GitHub",
@@ -25,22 +26,20 @@
     "JavaScript"
   ],
   "bugs": {
-    "url": "https://github.com/aibex/slack-rich-notify/issues"
+    "url": "https://github.com/jakobo/slack-rich-notify/issues"
   },
-  "homepage": "https://github.com/aibex/slack-rich-notify#readme",
+  "homepage": "https://github.com/jakobo/slack-rich-notify#readme",
   "dependencies": {
     "@actions/core": "^1.1.1",
     "@actions/exec": "^1.0.3",
     "@actions/github": "^2.1.1",
+    "@commitlint/cli": "^16.2.1",
+    "@commitlint/config-conventional": "^16.2.1",
     "@slack/bolt": "^2.0.0",
     "handlebars": "^4.7.6"
   },
   "devDependencies": {
     "@zeit/ncc": "^0.20.5",
-    "commitizen": "^4.0.4",
-    "commitlint-config-gitmoji": "^1.0.1",
-    "conventional-changelog-conventionalcommits": "^4.2.3",
-    "cz-emoji": "^1.2.1",
     "eslint": "^6.8.0",
     "husky": "^4.2.5",
     "jest": "^24.9.0",
@@ -51,7 +50,7 @@
     "hooks": {
       "pre-commit": "npm run commit:pkg && npm run lint-staged --shell",
       "post-commit": "git update-index --again",
-      "prepare-commit-msg": "if [ -t 1 ] ; then npm run commit:cz; fi"
+      "prepare-commit-msg": "if [ -t 1 ] ; then npm run lint:commit; fi"
     }
   }
 }

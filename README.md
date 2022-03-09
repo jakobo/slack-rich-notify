@@ -1,8 +1,8 @@
 <p align="center">
-  <a href="https://github.com/aibex/slack-rich-notify"><img alt="aibex/slack-rich-notify status" src="https://github.com/aibex/slack-rich-notify/workflows/units-test/badge.svg"></a>
+  <a href="https://github.com/jakobo/slack-rich-notify"><img alt="jakobo/slack-rich-notify status" src="https://github.com/jakobo/slack-rich-notify/workflows/units-test/badge.svg"></a>
 </p>
 
-# aibex/slack-rich-notify@v2.0.1
+# jakobo/slack-rich-notify@v3.0.0
 
 Because sometimes, you just want a mutliline markdown friendly message sent to slack. With variables.
 
@@ -13,7 +13,7 @@ steps:
   - name: Checkout
     uses: actions/checkout@v2
   - name: Notifying via Slack
-    uses: aibex/slack-rich-notify@v2.0.1
+    uses: jakobo/slack-rich-notify@v2.0.1
     with:
       token: ${{secrets.SLACK_BOT_KEY}} # your slack bot key
       secret: ${{secrets.SLACK_SIGNING_SECRET}} # your slack signing secret
@@ -37,7 +37,7 @@ steps:
 
 # Table of Contents
 
-- [aibex/slack-rich-notify@v2.0.1](#aibexslack-rich-notifyv201)
+- [jakobo/slack-rich-notify@v3.0.1](#jakoboslack-rich-notifyv201)
 - [Usage](#usage)
 - [Table of Contents](#table-of-contents)
 - [Action Parameters](#action-parameters)
@@ -70,7 +70,7 @@ steps:
 - `token`: `https://api.slack.com/apps` > `<your app>` > `OAuth & Permissions` > `field named: "Bot User OAuth Access Token"`
 - `secret`: `https://api.slack.com/apps` > `<your app>` > `section named: "App Credentials"` > `field named: "Client Secret"`
 - `channel`:
-  - **On Desktop** `right click channel and select "Copy Link"` > `https://aibex.slack.com/archives/[this-is-your-channel-id]` (it should begin with `C`)
+  - **On Desktop** `right click channel and select "Copy Link"` > `https://your-workspace.slack.com/archives/[this-is-your-channel-id]` (it should begin with `C`)
   - **On Web** `select your channel from the sidebar` > `https://app.slack.com/client/[this-is-your-team]/[this-is-your-channel-id]` (it should begin with `C`)
 
 # Using the `evals` Parameter
@@ -101,7 +101,7 @@ steps:
 
 ## What's in that `context` object?
 
-![View The Context In a Job](https://github.com/aibex/slack-rich-notify/workflows/Demo%20Output/badge.svg?branch=master&event=push) [View A Sample Dumped Context](https://github.com/aibex/slack-rich-notify/actions?query=workflow%3A%22Demo+Output%22)
+![View The Context In a Job](https://github.com/jakobo/slack-rich-notify/workflows/Demo%20Output/badge.svg?branch=master&event=push) [View A Sample Dumped Context](https://github.com/jakobo/slack-rich-notify/actions?query=workflow%3A%22Demo+Output%22)
 
 The `context` object available to your handlebars template is the same context object used by [Octokit](https://github.com/actions/toolkit/tree/master/packages/github). It contains a `payload` object which is your [webhook payload](https://developer.github.com/v3/activity/events/types/), along with a variety of other items connected to your Job, including `sha`, `ref`, and `workflow`.
 
